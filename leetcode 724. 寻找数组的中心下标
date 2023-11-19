@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int pivotIndex(vector<int>& nums) {
+        vector<int> dp(nums.size() + 1);
+        for(int i = 1; i <= nums.size(); i++)
+        {
+            dp[i] = dp[i - 1] + nums[i - 1];
+        }
+
+        for(int i = 1; i <= nums.size(); i++)
+        {
+            if(dp[i - 1] == dp[nums.size()] - dp[i]) return i - 1;
+        }
+
+        return -1;
+    }
+};
