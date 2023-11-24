@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+        int num = 0;
+        for(auto x : nums) num ^= x;
+
+        //分离
+        int diff = 0;
+
+        //根据相异为1，找到是第几个bit位不同
+        while(1)
+        {
+            if(((num >> diff) & 1) == 1) break;
+            else diff++;
+        }
+        
+        //两个数的这个bit位必定一个为0，一个为1
+        //将所有数根据这个bit位分为两类，一类全0，一位全1，分别异或
+
+        int a = 0, b = 0;
+        for(auto x : nums)
+            if(((x >> diff) & 1) == 1) a ^= x;
+            else b ^= x;
+
+        return {a,b};
+
+    }
+};
