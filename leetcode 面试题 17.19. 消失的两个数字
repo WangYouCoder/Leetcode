@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<int> missingTwo(vector<int>& nums) {
+        int ret = 0;
+        for(auto x : nums) ret ^= x;
+        for(int i = 1; i <= nums.size() + 2; i++) ret ^= i;
+
+        //分离a和b
+        int diff = 0;
+        while(1)
+        {
+            if(((ret >> diff) & 1) == 1) break;
+            else diff++;
+        }
+
+        int a = 0, b = 0;
+        for(auto x : nums) 
+            if(((x >> diff) & 1) == 1) a ^= x;
+            else b ^= x;
+        for(int i = 1; i <= nums.size() + 2; i++)
+            if(((i >> diff) & 1) == 1) a ^= i;
+            else b ^= i;
+
+        return {a,b};
+    }
+};
