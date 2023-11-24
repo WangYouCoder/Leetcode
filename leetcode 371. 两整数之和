@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int getSum(int a, int b) {
+
+        int ret = a, next = 0;
+        while(b)
+        {   
+            //异或无进位相加
+            ret = a ^ b;
+
+            //相与找到进位，进位是加到前一个位置，因此左移1
+            next = (a & b) << 1;
+
+            //无进位相加与进位相加，当进位为0时说明相加完毕，进位不为0时继续相加
+            a = ret;
+            b = next;
+        }
+
+        return ret;
+    }
+};
