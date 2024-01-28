@@ -1,0 +1,32 @@
+class Solution {
+public:
+    TreeNode* _buildTree(vector<int>& preorder, vector<int>& inorder,int& rooti,int begin,int end)
+    {
+        if(begin > end)
+            return nullptr;
+
+        //rooti是指向preorder  i是指向inorder
+        TreeNode* root = new TreeNode(preorder[rooti]);
+        int i = begin;
+        while(preorder[rooti] != inorder[i])
+        {
+            i++;
+        }
+
+        //
+        ++rooti;
+
+        // [begin,i-1] i [i+1,end]
+        root->left = _buildTree(preorder,inorder,rooti,begin,i-1);
+        root->right = _buildTree(preorder,inorder,rooti,i+1,end);
+
+        return root;
+    }
+
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int rooti = 0;
+        TreeNode* root = _buildTree(preorder,inorder,rooti,0,inorder.size()-1);
+
+        return root;
+    }
+};
