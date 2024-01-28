@@ -1,0 +1,49 @@
+class Solution {
+public:
+    bool Path(TreeNode* root,TreeNode* k, stack<TreeNode*>& st)
+    {
+        if(root == nullptr)
+            return false;
+        
+        st.push(root);
+
+        if(root == k)
+            return true;
+
+        if(Path(root->left,k,st))
+            return true;
+
+        if(Path(root->right,k,st))
+            return true;
+
+        st.pop();
+        return false;
+    }
+
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root == nullptr)
+            return nullptr;
+        
+        stack<TreeNode*> sp;
+        stack<TreeNode*> sq;
+        Path(root,p,sp);
+        Path(root,q,sq);
+
+        int num = 0;
+        while(sp.size() != sq.size())
+        {
+            if(sp.size() > sq.size())
+                sp.pop();
+            else
+                sq.pop();
+        }
+
+        while(sp.top() != sq.top())
+        {
+            sp.pop();
+            sq.pop();
+        }
+
+        return sp.top();
+    }
+};
