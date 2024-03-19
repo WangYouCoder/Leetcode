@@ -1,0 +1,30 @@
+class Solution {
+public:
+    //f[i]表示到达i位置时，偷
+    //g[i]表示到达i位置时，不偷
+    
+    int dp(vector<int>& nums,int l,int r)
+    {
+        if(l > r) return 0;
+        int n = nums.size();
+        vector<int> f(n);
+        auto g = f;
+
+        f[l] = nums[l];
+        for(int i = l+1; i <= r; i++)
+        {
+            f[i] = g[i-1] + nums[i];
+            g[i] = max(f[i - 1],g[i - 1]);
+        }
+
+        return max(f[r],g[r]);
+    }
+
+    int rob(vector<int>& nums) 
+    {
+        int n = nums.size();
+        int ret1 = dp(nums,2,n-2) + nums[0];
+        int ret2 = dp(nums,1,n-1);
+        return max(ret1,ret2);
+    }
+};
