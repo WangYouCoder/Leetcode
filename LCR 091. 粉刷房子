@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int minCost(vector<vector<int>>& costs) 
+    {
+        int n = costs.size();
+        //dp[i]表示到第i个房子时的最小花费
+        vector<int> f(n + 1);
+        auto g = f;
+        auto h = f;
+
+        for(int i = 1; i <= n; i++)
+        {
+            f[i] = min(g[i-1], h[i-1]) + costs[i - 1][0];
+            g[i] = min(f[i-1], h[i-1]) + costs[i - 1][1];
+            h[i] = min(f[i-1], g[i-1]) + costs[i - 1][2];
+        }
+
+        return min(f[n],min(g[n],h[n]));
+    }
+};
