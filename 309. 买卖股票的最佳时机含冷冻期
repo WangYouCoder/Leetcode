@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) 
+    {   
+        int n = prices.size();
+        //dp[i]表示到达第i天时的最大利润
+        //f[i]表示买入  g[i]表示卖出  h[i]表示冷冻期
+        
+        vector<int> f(n + 1);
+        auto g = f;
+        auto h = f;
+
+        f[0] = -prices[0];
+        for(int i = 1; i <= n; i++)
+        {
+            f[i] = max(f[i-1], h[i-1] - prices[i-1]);
+            g[i] = f[i-1] + prices[i-1];
+            h[i] = max(h[i-1], g[i-1]);
+        }
+
+        return max(h[n], g[n]);
+    }
+};
