@@ -1,0 +1,33 @@
+class Solution {
+public:
+
+    int INF = 0x3f3f3f3f;
+    int maxProfit(vector<int>& prices) 
+    {
+        //dp[i]表示到达第i天，所能获得的最大利润
+        int n = prices.size();
+        vector<vector<int>> f(n, vector<int>(3,-INF));
+        auto g = f;
+
+        int ret = -INF;
+        f[0][0] = -prices[0], g[0][0] = 0;
+
+        for(int i = 1; i < n; i++)
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                f[i][j] = max(f[i-1][j], g[i-1][j] - prices[i]);
+                g[i][j] = g[i-1][j];
+                if(j >= 1)
+                    g[i][j] = max(g[i - 1][j], f[i-1][j-1] + prices[i]);
+            }
+        }
+
+        for(int i = 0; i < 3; i++)
+        {
+            ret = max(g[n-1][i], ret);
+        }
+
+        return ret;
+    }
+};
