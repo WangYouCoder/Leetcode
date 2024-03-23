@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) 
+    {
+        //dp[i]表示以i位置为结尾的单词，能否被找到
+        //问题在于如何找到前一个呢？一个一个进行枚举。
+
+
+        int n = s.size();
+        unordered_set<string> hash;
+        for(auto &x : wordDict) hash.insert(x);
+        //dp[i]表示以i位置为结尾的单词，能否被找到
+        vector<bool> dp(n + 1);
+        dp[0] = true;
+        s = " " + s;
+        for(int i = 1; i <= n; i++)
+        {
+            for(int j = i; j >= 1; j--)
+            {
+                if(dp[j-1] && hash.count(s.substr(j, i-j+1)))
+                {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+
+        return dp[n];
+    }
+};
