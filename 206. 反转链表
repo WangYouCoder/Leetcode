@@ -1,0 +1,35 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) 
+    {
+        return dfs(head);
+    }
+
+    //将以head节点为首的链表进行翻转
+    ListNode* dfs(ListNode* head)
+    {
+        //head为空是处理空链表的情况
+        if(head == nullptr || head->next == nullptr) return head;
+        //最后一个节点作为新的头节点
+        ListNode* newhead =  dfs(head->next);
+        //head->next之后的链表已经翻转完成，此处该反转head此时指向的节点了
+
+        //以4为例，此时head指向的是4，newhead指向的5
+        //我们要将4连接到5后面，但是newhead是作为最终的返回节点的，不能动
+        //此时就需要先用head->next找到4后面的5，然后再连接到5后面，就是head->next  ->next = head;
+        head->next->next = head;
+        head->next = nullptr;
+
+        return newhead;
+    }
+};
