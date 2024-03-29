@@ -1,0 +1,15 @@
+class Solution {
+public:
+    double myPow(double x, int n) 
+    {
+        return n < 0 ? 1.0/dfs(x, -(long long)n) : dfs(x, n);
+    }
+
+    double dfs(double x, long long n)
+    {
+        if(n == 0) return 1.0; 
+        double tmp = dfs(x, n/2);
+
+        return n % 2 != 0 ? tmp * tmp * x : tmp * tmp;
+    }
+};
