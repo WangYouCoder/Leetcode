@@ -1,0 +1,29 @@
+   void Combina(string digits,int di,vector<string>& retV,string Combinastr)
+    {
+        if(di > digits.size())
+            return;
+
+        int num = digits[di - 1]-'0';
+        string str = numToStr[num];
+        for(auto e : str)
+        {
+            if(di == digits.size())
+            {
+                retV.push_back(Combinastr + e);
+            }
+
+            Combina(digits,di+1,retV,Combinastr+e);
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        vector<string> v;
+
+        if(digits.empty())
+        {
+            return v;
+        }
+        string str;
+        Combina(digits,1,v,str);
+
+        return v;
+    }
