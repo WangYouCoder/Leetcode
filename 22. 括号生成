@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<string> ret;
+    string path;
+
+    int l,r,k;
+    vector<string> generateParenthesis(int n) 
+    {
+        k = n;
+        dfs();
+        return ret;
+    }
+
+    void dfs()
+    {
+        if(r == k)
+        {
+            ret.push_back(path);
+            return;
+        } 
+
+        if(l < k)
+        {
+            path += '('; l++;
+            dfs();
+            path.pop_back();l--;
+        }
+        
+        if(r < l)
+        {
+            path += ')'; r++;
+            dfs();
+            path.pop_back(); r--;
+        }
+    }
