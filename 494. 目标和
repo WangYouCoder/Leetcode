@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int ret, t, path;
+    int findTargetSumWays(vector<int>& nums, int target) 
+    {
+        t = target;
+        dfs(nums, 0);
+        return ret;
+    }
+
+    void dfs(vector<int>& nums, int pos)
+    {
+        if(pos == nums.size() && path == t) ret++;
+        if(pos == nums.size()) return;
+
+        //正
+        path += nums[pos]; 
+        dfs(nums, pos + 1);
+        path -= nums[pos];
+
+        //负
+        path -= nums[pos];
+        dfs(nums, pos + 1);
+        path += nums[pos];
+    }
+};
