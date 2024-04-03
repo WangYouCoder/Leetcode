@@ -1,0 +1,46 @@
+class Solution {
+public:
+    bool row[9][10], col[9][10], check[3][3][10];
+    void solveSudoku(vector<vector<char>>& board) 
+    {
+        for(int i = 0; i < 9; i++)
+            for(int j = 0; j < 9; j++)
+                if(board[i][j] != '.')
+                {
+                    int num = board[i][j] - '0';
+                    row[i][num] = col[j][num] = check[i/3][j/3][num] = true;
+                }
+        dfs(board);
+    }
+
+    //为什么返回值要写bool????, 是为了进行剪枝！！！,如果不进行剪枝就会超时！！！
+    bool dfs(vector<vector<char>>& board)
+    {
+        for(int i = 0; i < 9; i++)
+            for(int j = 0; j < 9; j++)
+                if(board[i][j] == '.')
+                {
+                    for(int k = 1; k <= 9; k++)
+                    {
+                        if(!row[i][k] && !col[j][k] && !check[i/3][j/3][k])
+                        {
+                            board[i][j] = k + '0';
+                            row[i][k] = col[j][k] = check[i/3][j/3][k] = true;
+
+                            // 3. 用来判断下一层是否正确,如果是false,说明此次填写的数字是不能得到最后的正确结果的
+                            // 因此对于该层递归,要重新换一个数字进行填写
+                            // 注意: 是下一层返回的true时,才会层层返回噢
+                            if(dfs(board)) return true;
+                            row[i][k] = col[j][k] = check[i/3][j/3][k] = false;
+                            board[i][j] = '.';
+                        }
+                    }
+                    // 1. 这里返回false的场景是,某一个格子填1~9数字都不符合,所以就没有必要继续深搜下去了,直接返回
+                    // 注意：这个return是在两层for循环之中的
+                    return false;
+                }
+
+        // 2. 这里返回true的场景是, 当全部填数字完成后，并且都符合条件,会走到这里,是为了第三步
+        return true;
+    }
+};
