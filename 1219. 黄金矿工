@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int dx[4] = {0,0,1,-1};
+    int dy[4] = {1,-1,0,0};
+    int m,n,ret;
+    bool vis[16][16];
+    int getMaximumGold(vector<vector<int>>& g) 
+    {
+        m = g.size(), n = g[0].size();
+        for(int i = 0; i < m; i++)
+            for(int j = 0; j < n; j++)
+                if(g[i][j] != 0)
+                {
+                    vis[i][j] = true;
+                    dfs(g, i, j, g[i][j]);
+                    vis[i][j] = false;
+                }
+
+        return ret;
+    }
+
+    void dfs(vector<vector<int>>& g, int i, int j, int val)
+    {
+        ret = max(ret, val);
+        for(int k = 0; k < 4; k++)
+        {
+            int x = dx[k] + i, y = dy[k] + j;
+            if(x >= 0 && x < m && y >= 0 && y < n && !vis[x][y] && g[x][y] != 0)
+            {
+                vis[x][y] = true;
+                dfs(g,x,y,val+g[x][y]);
+                vis[x][y] = false;
+            }
+        }
+    }
+};
