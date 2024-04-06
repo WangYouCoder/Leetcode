@@ -1,0 +1,15 @@
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) 
+    {
+        int n = nums.size();
+        int cur1 = 0,cur2 = 0;
+        while(cur1 < n)
+        {
+            if(nums[cur1])
+                swap(nums[cur1], nums[cur2++]);
+            
+            cur1++;
+        }
+    }
+};
