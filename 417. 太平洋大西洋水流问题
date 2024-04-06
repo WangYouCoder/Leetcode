@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int m, n;
+    int dx[4] = {1, -1, 0, 0};
+    int dy[4] = {0, 0, 1, -1};
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) 
+    {
+        vector<vector<int>> ret;
+        m = heights.size(), n = heights[0].size();
+        vector<vector<bool>> pac(m, vector<bool>(n));
+        vector<vector<bool>> atl(m, vector<bool>(n));
+
+        for(int j = 0; j < n; j++) dfs(heights, 0, j, pac);
+        for(int i = 0; i < m; i++) dfs(heights, i, 0, pac);
+
+        for(int j = 0; j < n; j++) dfs(heights, m - 1, j, atl);
+        for(int i = 0; i < m; i++) dfs(heights, i, n - 1, atl);
+
+        for(int i = 0; i < m; i++)
+            for(int j = 0; j < n; j++)
+            {
+                if(pac[i][j] && atl[i][j])
+                {
+                    ret.push_back({i,j});
+                }
+            }
+        
+        return ret;
+    }
+
+    void dfs(vector<vector<int>>& board, int i, int j, vector<vector<bool>>& vis)
+    {
+        vis[i][j] = true;
+        for(int k = 0; k < 4; k++)
+        {
+            int x = dx[k] + i, y = dy[k] + j;
+            if(x >= 0 && x < m && y >= 0 && y < n && !vis[x][y] && board[x][y] >= board[i][j])
+            {
+                dfs(board, x, y, vis);
+            }
+        }
+    }
+};
