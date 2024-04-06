@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int m, n;
+    bool vis[301][301];
+    int dx[4] = {0,0,1,-1};
+    int dy[4] = {1,-1,0,0};
+    int numIslands(vector<vector<char>>& grid) 
+    {
+        int ret = 0;
+        m = grid.size(), n = grid[0].size();
+        for(int i = 0; i < m; i++)
+            for(int j = 0; j < n; j++)
+            {
+                if(grid[i][j] == '1' && !vis[i][j])
+                {
+                    ret++;
+                    dfs(grid, i, j);
+                }
+            }
+        
+        return ret;
+    }
+
+    void dfs(vector<vector<char>>& grid, int i, int j)
+    {
+        vis[i][j] = true;
+        for(int k = 0; k < 4; k++)
+        {
+            int x = i + dx[k], y = dy[k] + j;
+            if(x >= 0 && x < m && y >= 0 && y <n && !vis[x][y] && grid[x][y] == '1')
+            {
+                dfs(grid, x, y);
+            }
+        }
+    }
+};
