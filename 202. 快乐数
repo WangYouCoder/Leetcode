@@ -1,0 +1,55 @@
+class Solution {
+public:
+    // // 对于循环问题,可以使用快慢指针来解决,但是这个题可以使用哈希表来辅助,先入为主就写了哈希了
+    // bool isHappy(int n) 
+    // {
+    //     unordered_set<int> hash;
+    //     while(true)
+    //     {
+    //         int num = 0;
+    //         while(n)
+    //         {
+    //             int tmp = n % 10;
+    //             num += tmp * tmp;
+    //             n /= 10;
+    //         }
+    //         cout << num << endl;
+    //         if(num == 1) return true;
+    //         if(hash.count(num)) return false;
+    //         else hash.insert(num);
+
+    //         n = num;
+    //     }
+    // }
+
+    // 快慢指针版本
+    int Mul(int n)
+    {
+        int sum = 0;
+        while(n)
+        {
+            int t = n % 10;
+            sum += t * t;
+            n /= 10;
+        }
+        return sum;
+    }    
+
+    bool isHappy(int n) 
+    {
+        // 意思就是快指针每次都比慢指针多走一步
+        int slow = n, fast = Mul(n);
+
+        // 相等说明有环
+        // 1. 出现相同的数字,说明重复数字，出循环
+        // 2. 结果为1,还是会重复
+        // 3. 所以只需要判断出循环后的结果是不是1就可以了
+        while(slow != fast)
+        {
+            slow = Mul(slow);
+            fast = Mul(Mul(fast));
+        }
+
+        return slow == 1;
+    }
+};
