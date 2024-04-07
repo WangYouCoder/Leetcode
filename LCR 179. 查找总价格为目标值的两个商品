@@ -1,0 +1,17 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& price, int target) 
+    {
+        int n = price.size();
+        sort(price.begin(), price.end());
+        int left = 0, right = n - 1;
+        while(left < right)
+        {
+            if(price[left] + price[right] < target) left++;
+            else if(price[left] + price[right] > target) right--;
+            else return {price[left], price[right]};
+        }
+
+        return {};
+    }
+};
