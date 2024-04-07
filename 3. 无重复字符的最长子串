@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) 
+    {
+        int hash[128] = {0};
+        int n = s.size();
+        int ret = 0;
+        for(int left = 0, right = 0; right < n; right++)
+        {
+            hash[s[right]]++;
+            while(hash[s[right]] > 1)
+            {
+                hash[s[left]]--;
+                left++;
+            }
+            ret = max(ret, right - left + 1);
+        }
+
+        return ret;
+    }
+};
