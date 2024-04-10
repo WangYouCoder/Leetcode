@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) 
+    {
+        int n = nums.size();
+        int left = 0, right = n - 1;
+        if(n == 0) return {-1, -1};
+        //left
+        while(left < right)
+        {
+            int mid = left + (right - left) / 2;
+            if(nums[mid] >= target) right = mid;
+            else left = mid + 1;
+        }
+        int begin = left;
+
+        //right
+        left = 0, right = n - 1;
+        while(left < right)
+        {
+            int mid = left + (right - left + 1) / 2;
+            if(nums[mid] > target) right = mid - 1;
+            else left = mid;
+        }
+        if(nums[begin] != target) return {-1, -1};
+
+        return {begin, right};
+    }
+};
