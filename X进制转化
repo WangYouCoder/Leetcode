@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1e5 + 10;
+const long long MOD = 1e9 + 7;
+int main()
+{
+    int Ma[N] = {0}, Mb[N] = {0};
+    int n = 0, ma = 0, mb = 0;
+    cin >> n;
+    cin >> ma;for(int i = ma - 1; i >= 0; i--) cin >> Ma[i];
+    cin >> mb;for(int i = mb - 1; i >= 0; i--) cin >> Mb[i];
+
+    long long ret = 0;
+    int w = 0;
+    long long base = 1;
+    for(int i = 0; i < max(ma,mb); i++)
+    {
+        w = max(max(Ma[i], Mb[i]) + 1, 2);
+        //ret += ((Ma[i] - Mb[i]) * base) % MOD;
+        ret = ret % MOD + ((Ma[i] - Mb[i]) * base) % MOD;
+        //ret = (ret + (Ma[i] - Mb[i]) * base) % MOD;
+        base = (base * w) % MOD;
+    }
+
+    cout << ret % MOD;
+    return 0;
+}
