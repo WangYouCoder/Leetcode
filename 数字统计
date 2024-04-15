@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+int solve(int n)
+{
+    int ret = 0;
+    while(n)
+    {
+        if(n % 10 == 2) ret++;
+        n /= 10;
+    }
+    return ret;
+}
+
+int main() 
+{
+    int l,r;
+    cin >> l >> r;
+    int ret = 0;
+    for(int i = l; i <= r; i++)
+    {
+        ret += solve(i);
+    }
+    cout << ret;
+    return 0;
+}
