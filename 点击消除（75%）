@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+#include <stack>
+using namespace std;
+
+stack<int> s;
+bool sym;
+void solve(string& str)
+{
+    int left = 0,right = 1;
+    while(left < str.size() && right < str.size())
+    {
+        if(str[left] == str[right]) 
+        {
+            s.push(left);
+            left = right + 1; right = left + 1;
+        }
+        else 
+        {
+            left++;
+            right++;
+        }
+        
+    }
+    if(s.empty()) sym = false;
+    while(!s.empty())
+    {
+        auto a = s.top();s.pop();
+        str.erase(a, 2);
+    }
+}
+
+
+int main() 
+{
+    string str;
+    cin >> str;
+    sym = true;
+    while(sym)
+    {
+        solve(str);
+    }
+    cout << str;
+    return 0;
+}
