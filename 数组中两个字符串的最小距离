@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+#include <string>
+int main() {
+    int n = 0;
+    cin >> n;
+    string str1, str2, s;
+    cin >> str1 >> str2;
+    int cur1 = -1, cur2 = -1, ret = 0x3f3f3f3f;
+    for (int i = 0; i < n; i++) {
+        cin >> s;
+        if (s == str1) { // 去前⾯找最近的 s2
+            if (cur2 != -1) {
+                ret = min(ret, i - cur2);
+            }
+            cur1 = i;
+        } else if (s == str2) { // 去前⾯找 s1
+            if (cur1 != -1) {
+                ret = min(ret, i - cur1);
+            }
+            cur2 = i;
+        }
+    }
+
+    if (ret == 0x3f3f3f3f) cout << -1;
+    else cout << ret;
+    return 0;
+}
