@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+#include<string>
+int main() 
+{
+    string s;
+    getline(cin, s);
+    string ret;
+    int cur = 0;
+    while(cur < s.size())
+    {
+        if(s[cur] >= 'a' && s[cur] <= 'z') ret += s[cur] - 32;
+        else ret += s[cur];
+        while(cur < s.size() && s[cur] != ' ') cur++;
+        cur++;
+    }
+
+    cout << ret;
+    return 0;
+}
