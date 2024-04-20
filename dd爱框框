@@ -1,0 +1,28 @@
+#include<iostream>
+using namespace std;
+#include <vector>
+typedef long long ll;
+int main()
+{
+    int n = 0, x = 0; cin >> n >> x;
+    vector<ll> nums(n + 1);
+    for(int i = 1; i <= n; i++)
+    {
+        //cin >> nums[i];
+        scanf("%d",&nums[i]);
+    }
+    int left = 0, right = 0,sum = 0, len = 0x3f3f3f3f, l = 0, r = 0;
+    while(right <= n)
+    {
+        sum += nums[right];
+        while(sum >= x)
+        {
+            if(right - left < len) len = right - left, l = left, r = right;
+            sum -= nums[left++];
+        }
+        right++;
+    }
+    //cout << l << " " << r;
+    printf("%d %d",l,r);
+    return 0;
+}
