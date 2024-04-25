@@ -1,0 +1,16 @@
+#include <iostream>
+using namespace std;
+int main() {
+    int q = 0;
+    cin >> q;
+    while (q--) 
+    {
+        int a, b, c;
+        cin >> a >> b >> c;
+        int ret = min(a, min(b, c)) * 2;
+        int t = b - ret / 2;
+        if (t < 2) cout << ret << endl;
+        else cout << ret + t - 1 << endl;
+    }
+    return 0;
+}
