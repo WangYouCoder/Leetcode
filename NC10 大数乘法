@@ -1,0 +1,31 @@
+class Solution {
+public:
+    string solve(string s, string t) 
+    {
+        string ret;
+        reverse(s.begin(), s.end());
+        reverse(t.begin(),t.end());
+        int m = s.size(), n = t.size(); 
+        vector<int> nums(m + n);
+        for(int i  = 0; i < m; i++)
+            for(int j = 0; j < n; j++)
+            {
+                nums[i+j] += (s[i] - '0') * (t[j] - '0');
+            }
+        n = 0;
+        for(int i = 0; i < nums.size(); i++)
+        {
+            nums[i] += n;
+            ret += nums[i] % 10 + '0';
+            n = nums[i] / 10;
+        }
+        while(n)
+        {
+            ret += n + '0';
+            n /= 10;
+        }
+        while(ret.size() > 1 && ret.back() == '0') ret.pop_back();
+        reverse(ret.begin(), ret.end());
+        return ret;
+    }
+};
