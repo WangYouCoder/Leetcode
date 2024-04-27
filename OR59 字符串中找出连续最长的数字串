@@ -1,0 +1,40 @@
+#include <iostream>
+using namespace std;
+#include <string>
+int main() {
+    string s;
+    cin >> s;
+    int left = 0, right = 0;
+    int len = 0;
+    string ret;
+    int n = s.size();
+    // while(right < s.size())
+    // {
+    //     while(right < s.size() && s[right] <= '0' || s[right] >= '9') right++;
+    //     left = right;
+    //     while(right < s.size() && s[right] >= '0' && s[right] <= '9') right++;
+    //     if(len < right - left)
+    //     {
+    //         len = right - left;
+    //         ret = s.substr(left, right - left);
+    //     }
+    //         left = right;
+    // }
+    while (left < n && right < n) 
+    {
+        while (left < n && (s[left] <= '0' || s[left] >= '9')) left++;
+        right = left;
+        while (right < n && (s[right] >= '0' && s[right] <= '9')) right++;
+        if (len < right - left) 
+        {
+            len = right - left;
+            ret = s.substr(left, right - left);
+        }
+        left = right;
+    }
+    if(ret.size() == 0) cout << "";
+    else cout << ret;
+
+    cout << ret;
+    return 0;
+}
