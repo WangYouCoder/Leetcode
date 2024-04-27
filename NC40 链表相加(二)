@@ -1,0 +1,70 @@
+class Solution {
+public:
+  ListNode * Reverse(ListNode *&list) 
+    {
+        ListNode * p = nullptr, * c = list, * n = list->next;
+        while (c) 
+        {
+            c->next = p;
+            p = c;
+            c = n;
+            if (n)
+                n = n->next;
+        }
+        return p;
+    }
+    // ListNode* reverse(ListNode* head)
+    // {
+    //     ListNode* newHead = new ListNode(0);
+    //     ListNode* cur = head;
+    //     while(cur)
+    //     {
+    //         ListNode* next = cur->next;
+    //         cur->next = newHead->next;
+    //         newHead->next = cur;
+    //         cur = next;
+    //     }
+    //     cur = newHead->next;
+    //     delete newHead;
+    //     return cur;
+    // }
+    ListNode * addInList(ListNode * head1, ListNode * head2) 
+    {
+        ListNode * cur1 = Reverse(head1);
+        ListNode * cur2 = Reverse(head2);
+        ListNode* ret = nullptr;
+        ListNode* list = nullptr;
+        int n = 0;
+        while (cur1 || cur2 || n) 
+        {
+            int num = 0;
+            if (cur1)
+            {
+                num += cur1->val;
+                cur1 = cur1->next;
+            } 
+            if (cur2) 
+            {
+                num += cur2->val;
+                cur2 = cur2->next;
+            }
+            num += n;
+            ListNode *node = new ListNode(num % 10);
+
+            if(list != nullptr)
+            {
+                list -> next = node;
+                list = list->next;
+            }
+            else
+            {
+                list = node;
+                ret = node;
+            }
+            cout << list->val << " ";
+            n = num / 10;
+        }
+        ret = Reverse(ret);
+        return ret;
+    }
+};
