@@ -1,0 +1,18 @@
+class Solution {
+  public:
+    string solve (string s, string t) {
+        int cur1 = s.size() - 1, cur2 = t.size() - 1, n = 0;
+        string ret;
+        while (cur1 >= 0 || cur2 >= 0 || n) 
+        {
+            int sum = 0;
+            if (cur1 >= 0) sum += (s[cur1--] - '0');
+            if (cur2 >= 0) sum += (t[cur2--] - '0');
+            sum += n;
+            ret += to_string(sum % 10);
+            n = sum / 10;
+        }
+        reverse(ret.begin(), ret.end());
+        return ret;
+    }
+};
