@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+#include <string>
+#include <algorithm>
+int main() 
+{
+    string ret, num;
+    cin >> num;
+    reverse(num.begin(), num.end());
+    int n = num.size();
+    int k = 0;
+    while (k < n) 
+    {
+        if (k != 0 && k % 3 == 0)
+            ret += ",";
+        ret += num[k++];
+    }
+    reverse(ret.begin(), ret.end());
+    cout << ret;
+    return 0;
+}
