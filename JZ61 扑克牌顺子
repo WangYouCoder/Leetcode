@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool hash[14];
+    bool IsContinuous(vector<int>& nums) 
+    {
+        memset(hash, 0, sizeof hash);
+        int maxVal = 0, minVal = 14;
+        for(auto x : nums)
+        {
+            if(x)
+            {
+                if(hash[x]) return false;
+                else
+                {
+                    hash[x] = true;
+                    maxVal = max(maxVal, x);                
+                    minVal = min(minVal, x);                
+                }
+            }
+        }
+        return maxVal - minVal <= 4;
+    }
+};
