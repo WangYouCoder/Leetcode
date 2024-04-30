@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+using ll = long long;
+// 求最大公约数 -> 辗转相除法
+ll solve(ll x, ll y) 
+{
+    ll ret = 0;
+    while (x % y != 0) 
+    {
+        ret = x % y;
+        x = y;
+        y = ret;
+    }
+    return y;
+}
+int main() 
+{
+    ll x, y;
+    cin >> x >> y;
+    ll num = solve(max(x, y), min(x, y));
+    // 短除法
+    ll ret = (x / num) * (y / num) * num;
+    cout << ret;
+    return 0;
+}
