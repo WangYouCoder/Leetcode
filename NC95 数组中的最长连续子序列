@@ -1,0 +1,36 @@
+class Solution {
+  public:
+    // 注意处理数据重复的问题！！！！！！！
+    using ll = long long;
+    int MLS(vector<int>& arr) 
+    {
+        int n = arr.size();
+        sort(arr.begin(), arr.end());
+        int left = 0;
+        int len = 0;
+        while (left < n) 
+        {
+            int right = left + 1;
+            int count = 1;
+            while(right < n)
+            {
+                if(arr[right] - arr[right - 1] == 1) 
+                {
+                    right++;
+                    count++;
+                }
+                else if(arr[right] - arr[right - 1] == 0)
+                {
+                    right++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            len = max(len, count);
+            left = right;
+        }
+        return len;
+    }
+};
