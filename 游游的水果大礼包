@@ -1,0 +1,68 @@
+#include <iostream>
+using namespace std;
+using ll = long long;
+ll a, b, n, m;
+// int solvea()
+// {
+//     ll t = n / 2;
+//     ll ret = min(t, m) * a;
+//     if(n % 2 == 1 && m - t > 1)
+//     {
+//         ret += b;
+//     }
+//     return ret;
+// }
+// int solveb()
+// {
+//     ll t = m / 2;
+//     ll ret = min(t, n) * b;
+//     if(m % 2 == 1 && n - t > 1)
+//     {
+//         ret += a;
+//     }
+//     return ret;
+// }
+// int solvec(ll m, ll p)
+// {
+//     ll t = m / 2;
+//     ll ret = min(t, n) * p;
+//     if(m % 2 == 1 && n - t > 1)
+//     {
+//         ret += a;
+//     }
+//     return ret;
+// }
+// int main()
+// {
+//     cin >> n >> m >> a >> b;
+//     if(a > b)
+//     {
+//         cout << solvea();
+//     }
+//     else if(b > a)
+//     {
+//         cout << solveb();
+//     }
+//     else
+//     {
+//         if(n > m)
+//             cout << solvec(n,a);
+//         else
+//             cout << solvec(m,b);
+//     }
+//     return 0;
+// }
+
+
+int main()
+{
+    cin >> n >> m >> a >> b;
+    ll ret = 0;
+    for(ll x = 0; x <= min(n / 2, m); x++)
+    {
+        ll y = min((n - x * 2), (m - x) / 2);
+        ret = max(ret, x * a + y * b);
+    }
+    cout << ret;
+    return 0;
+}
