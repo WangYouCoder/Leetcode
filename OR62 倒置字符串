@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+#include <string>
+void Reverse(string& s, int left, int right) 
+{
+    while (left < right) 
+    {
+        swap(s[left++], s[right--]);
+    }
+}
+int main() 
+{
+    string s;
+    getline(cin, s);
+    Reverse(s, 0, s.size() - 1);
+    int left = 0, right = 0;
+    while (right < s.size()) 
+    {
+        while (right < s.size() && s[right] != ' ') right++;
+        Reverse(s, left, right - 1);
+        left = right + 1;
+        right = left;
+    }
+    cout << s;
+    return 0;
+}
