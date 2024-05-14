@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+#include <unordered_set>
+#include <string>
+int main() {
+    int hash[300];
+    string s, s1;
+    getline(cin, s);
+    getline(cin, s1);
+
+    for (auto ch : s1) 
+    {
+        hash[ch] = 1;
+    }
+    for (int i = 0; i < s.size(); i++) 
+    {
+        if (hash[s[i]] == 1) 
+        {
+            s.erase(i, 1);
+            i--;
+        }
+    }
+    if (s.size() == 0) cout << "";
+    else cout << s;
+    return 0;
+}
