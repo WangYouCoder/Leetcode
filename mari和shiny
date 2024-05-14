@@ -1,0 +1,17 @@
+#include <iostream>
+using namespace std;
+#include <string>
+int main()
+{
+    int n = 0; cin >> n;
+    string str; cin >> str;
+    long long s = 0, h = 0, y = 0;
+    for(auto ch : str)
+    {
+        if(ch == 's') s++;
+        else if(ch == 'h') h += s;
+        else if(ch == 'y') y += h;
+    }
+    cout << y;
+    return 0;
+}
