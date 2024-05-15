@@ -1,0 +1,26 @@
+class Solution {
+  public:
+    // 滑动窗口
+    int maxLength(vector<int>& nums) 
+    {
+        int ret = 0;
+        int n = nums.size();
+        // 维护一段有效区间
+        int left = 0, right = 0;
+        // 判断前面是否出现过这个数字
+        unordered_set<int> hash;
+        while (right < n)
+         {
+            while (right < n && hash.count(nums[right]) == 0) 
+            {
+                hash.insert(nums[right++]);
+            }
+            ret = max(ret, right - left);
+            while (hash.count(nums[right]) == 1) 
+            {
+                hash.erase(nums[left++]);
+            }
+        }
+        return ret;
+    }
+};
