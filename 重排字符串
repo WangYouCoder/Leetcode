@@ -1,0 +1,54 @@
+#include <iostream>
+using namespace std;
+#include <string>
+#include <vector>
+#include <cstring>
+int main()
+{
+    int n = 0; cin >> n;
+    string s; cin >> s;
+    int hash[26];
+    memset(hash, 0 ,sizeof hash);
+    int maxCount = 0,maxIndex = 0;
+    for(int i = 0; i < n; i++)
+    {
+        int ch = s[i] - 'a';
+        hash[ch]++;
+        if(hash[ch] > maxCount)
+        {
+            maxCount = hash[ch];
+            maxIndex = ch;
+        }
+    }
+    if((n + 1) / 2 < maxCount)
+    {
+        cout << "no";
+        return 0;
+    }
+    vector<string> ret(n);
+    int cur = 0;
+    while(maxCount--)
+    {
+        ret[cur] = maxIndex + 'a';
+        cur += 2;
+    }
+    
+    for(int i = 0; i < 26; i++)
+    {
+        if(hash[i] && i != maxIndex)
+        {
+            while(hash[i]--)
+            {
+                if(cur >= n) cur = 1;
+                ret[cur] = i + 'a';
+                cur += 2;
+            }
+        }
+    }
+    cout << "yes" << endl;
+    for(int i = 0; i < n; i++)
+    {
+        cout << ret[i];
+    }
+    return 0;
+}
