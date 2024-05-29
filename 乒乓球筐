@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+#include <unordered_map>
+#include <string>
+int main()
+{
+unordered_map<char, int> hash1, hash2;
+string str1, str2; cin >> str1 >> str2;
+for(auto &ch : str1)
+hash1[ch]++;
+for(auto &ch : str2)
+hash2[ch]++;
+for(auto &ch : str2)
+{
+if(hash2[ch] > hash1[ch])
+{
+cout << "No";
+return 0;
+}
+}
+cout << "Yes";
+return 0;
+}
