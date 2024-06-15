@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+const int N = 1e5 + 10;
+int nums[N];
+int n;
+int f[N];
+int g[N];
+
+int main()
+{
+    int n = 0; cin >> n;
+    int x = 0;
+    for(int i = 0; i < n; i++)
+    {
+        cin >> x;
+        nums[x] += x;
+    }
+
+    for(int i = 1; i < N; i++)
+    {
+        f[i] = /*max(f[i-1], g[i-1])*/ g[i-1] + nums[i];  // 这个数字被选的前提是前一个数字不能被选，如果前一个选的话，这个数字就会被删除
+        g[i] = max(g[i-1], f[i-1]);
+    }
+
+    cout << max(f[N-1], g[N-1]) << endl;
+    return 0;
+
+}
