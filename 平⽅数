@@ -1,0 +1,15 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+typedef long long LL;
+int main()
+{
+ LL x;
+ cin >> x;
+ LL a = sqrt(x);
+ LL x1 = a * a, x2 = (a + 1) * (a + 1);
+ if(x - x1 < x2 - x) cout << x1 << endl;
+ else cout << x2 << endl;
+ 
+ return 0;
+}
