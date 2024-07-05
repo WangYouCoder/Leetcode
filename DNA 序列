@@ -1,0 +1,33 @@
+#include <iostream>
+#include <string>
+using namespace std;
+string s;
+int x;
+int main()
+{
+ cin >> s >> x;
+ int begin = -1; // 标记结果的起始位置
+ int maxCount = 0; // 存储之前的窗⼝⾥⾯ C + G 的个数
+ int count = 0; // 统计窗⼝内 C + G
+ int left = 0, right = 0, n = s.size();
+while(right < n)
+ {
+   if(s[right] == 'C' || s[right] == 'G') count++;
+   while(right - left + 1 > x)
+   {
+     if(s[left] == 'C' || s[left] == 'G') count--;
+     left++;
+   }
+   if(right - left + 1 == x)
+   {
+     if(count > maxCount)
+     {
+       begin = left;
+       maxCount = count;
+     }
+   }
+   right++;
+   }
+ cout << s.substr(begin, x) << endl;
+ return 0;
+}
