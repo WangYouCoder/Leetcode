@@ -1,0 +1,70 @@
+/**
+ * struct ListNode {
+ *	int val;
+ *	struct ListNode *next;
+ *	ListNode(int x) : val(x), next(nullptr) {}
+ * };
+ */
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param head ListNode类 
+     * @param m int整型 
+     * @param n int整型 
+     * @return ListNode类
+     */
+    ListNode* reverseBetween(ListNode* head, int m, int n) {
+        if(head == nullptr || (m == n)) return head;
+        int _m = m, _n = n;
+        ListNode *left = head, *right = head, *begin = nullptr;
+        for(int i = 1; i < m; i++)
+        {
+            begin = left;
+            left = left->next;
+        }
+        for(int i = 1; i < n; i++)
+        {
+            right = right->next;
+        }
+
+       ListNode* tail = right->next;
+
+        ListNode* cur = head, *prev = nullptr, *next = cur->next;
+        for(int i = 1; i < m; i++)
+        {
+            prev = cur;
+            cur = cur->next;
+        }
+        next = cur ->next;
+
+        int num = n - m + 1;
+        // while(num--)
+        for(int i = 1; i <= num; i++)
+        {
+            cur->next = prev;
+            prev = cur;
+            cur = next;
+            if(next)
+                next = next->next;
+        }
+
+        // 如果翻转的范围不包括头节点，那么就进行连接
+        if(begin != nullptr)
+        {
+            begin->next = right;
+            left->next = tail;
+            return head;
+        }
+
+        // 到这里说明翻转的范围包括了头节点，那么就意味这返回的结点不再是原来的头节点了，返回的是翻转完成之后的结点
+        // 同时需要考虑尾部是否还有结点
+        if(tail != nullptr)
+        {
+            left->next = tail;        
+        }
+        return prev;
+    }
+};
