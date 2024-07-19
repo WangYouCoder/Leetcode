@@ -1,0 +1,38 @@
+
+/*
+struct ListNode {
+    int val;
+    struct ListNode *next;
+    ListNode(int x) :
+        val(x), next(NULL) {
+    }
+};
+*/
+class Solution {
+public:
+    ListNode* hasCycle(ListNode *head) {
+        if(head == nullptr) return nullptr;
+        ListNode* fast = head, *slow = head;
+        while(fast && slow && fast->next)
+        {
+            fast = fast->next->next;
+            slow = slow->next;
+            if(fast == slow) return fast;
+        }
+        return nullptr;
+    }
+    ListNode* EntryNodeOfLoop(ListNode* head) {
+        ListNode* meet = hasCycle(head);
+        if(meet)
+        {
+            ListNode* cur = head;
+            while(cur != meet)
+            {
+                cur = cur->next;
+                meet = meet->next;
+            }
+            return meet;
+        }
+        return nullptr;
+    }
+};
