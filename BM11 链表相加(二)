@@ -1,0 +1,74 @@
+/**
+ * struct ListNode {
+ *	int val;
+ *	struct ListNode *next;
+ *	ListNode(int x) : val(x), next(nullptr) {}
+ * };
+ */
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param head1 ListNode类 
+     * @param head2 ListNode类 
+     * @return ListNode类
+     */
+
+    ListNode* Reverse(ListNode* head)
+    {
+        if(head == nullptr) return nullptr;
+        ListNode *cur = head, *prev = nullptr, *next = cur->next;
+        while(cur)
+        {
+            cur->next = prev;
+            prev = cur;
+            cur = next;
+            if(next)
+                next = next->next;
+        }
+        return prev;
+    }
+    ListNode* addInList(ListNode* head1, ListNode* head2) 
+    {
+        if(head1 == nullptr) return head2;
+        if(head2 == nullptr) return head1;
+        ListNode* cur1 = Reverse(head1);
+        ListNode* cur2 = Reverse(head2);
+
+        auto head = new ListNode(-1);
+        auto cur = head;
+        int t = 0;
+        while(cur1 || cur2 || t)
+        {
+            int n = 0;
+            if(cur1) 
+            {
+                n += cur1->val;
+                cur1 = cur1->next;
+            }
+            if(cur2)
+            {
+                n += cur2->val;
+                cur2 = cur2->next;
+            } 
+            n += t;
+            t = n / 10;
+            n %= 10;
+            auto node = new ListNode(n);
+            cur->next = node;
+            cur = cur->next;
+        }
+        return Reverse(head->next);
+    }
+};
+
+
+
+
+
+
+
+
+
