@@ -1,0 +1,57 @@
+/**
+ * struct ListNode {
+ *	int val;
+ *	struct ListNode *next;
+ *	ListNode(int x) : val(x), next(nullptr) {}
+ * };
+ */
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param head ListNode类 the head node
+     * @return ListNode类
+     */
+    ListNode* Merge(ListNode* head1, ListNode* head2)
+    {
+        if(head1 == nullptr) return head2;
+        if(head2 == nullptr) return head2;
+
+        auto ret = new ListNode(-1);
+        auto head = ret;
+        while(head1 && head2)
+        {
+            if(head1->val < head2->val)
+            {
+                ret->next = head1;
+                head1 = head1->next;
+            }
+            else 
+            {
+                ret->next = head2;
+                head2 = head2->next;
+            }
+            ret = ret->next;
+        }
+        if(head1) ret->next = head1;
+        if(head2) ret->next = head2;
+        return head->next;
+    }
+
+    ListNode* sortInList(ListNode* head) 
+    {
+        if(head == nullptr || head->next == nullptr)
+            return head;
+        ListNode* left = head, *mid = head->next, *right = head->next;
+        while(right && right->next)
+        {
+            left = left->next;
+            mid = mid->next;
+            right = right->next->next;
+        }
+        left->next = nullptr;
+        return Merge(sortInList(head), sortInList(mid));
+    }
+};
