@@ -1,0 +1,61 @@
+/**
+ * struct ListNode {
+ *	int val;
+ *	struct ListNode *next;
+ *	ListNode(int x) : val(x), next(nullptr) {}
+ * };
+ */
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param head ListNode类 the head
+     * @return bool布尔型
+     */
+    
+    ListNode* Reverse(ListNode* head)
+    {
+        if(head == nullptr) return nullptr;
+        ListNode *cur = head, *prev = nullptr, *next = cur->next;
+        while(cur)
+        {
+            cur->next = prev;
+
+            prev = cur;
+            cur = next;
+            if(next)
+                next = next->next;
+        }
+        return prev;
+    }
+
+    bool isPail(ListNode* head) 
+    {
+        if(head == nullptr) return true;
+        auto head1 = new ListNode(-1);
+        ListNode* cur = head, *cur1 = head1;
+        while(cur)
+        {
+            cur1->next = new ListNode(cur->val);
+            cur = cur->next;
+            cur1 = cur1->next;
+        }
+        cur = Reverse(head1->next);
+
+        while(cur && head)
+        {
+            if(cur->val == head->val)
+            {
+                cur = cur->next;
+                head = head->next;
+            }
+            else 
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+};
