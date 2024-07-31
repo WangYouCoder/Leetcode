@@ -1,0 +1,49 @@
+/**
+ * struct TreeNode {
+ *	int val;
+ *	struct TreeNode *left;
+ *	struct TreeNode *right;
+ *	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ * };
+ */
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param root TreeNode类 
+     * @return int整型vector
+     */
+    // void Order(TreeNode* root, vector<int> &ret)
+    // {
+    //     if(root == nullptr) return;
+    //     Order(root->left, ret);
+    //     ret.push_back(root->val);
+    //     Order(root->right, ret);
+    // }
+    vector<int> inorderTraversal(TreeNode* root) 
+    {
+        vector<int> ret;
+        // Order(root, ret);
+        // return ret;
+        stack<TreeNode*> st;
+        TreeNode *cur = root;
+
+        while(cur != nullptr || !st.empty())
+        {
+            while(cur)
+            {
+                st.push(cur);
+                cur = cur->left;
+            }
+            
+            cur = st.top();
+            st.pop();
+            ret.push_back(cur->val);
+            cur = cur->right;
+        }
+        return ret;
+
+    }
+};
