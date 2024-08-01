@@ -1,0 +1,46 @@
+/**
+ * struct TreeNode {
+ *	int val;
+ *	struct TreeNode *left;
+ *	struct TreeNode *right;
+ *	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ * };
+ */
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param t1 TreeNode类 
+     * @param t2 TreeNode类 
+     * @return TreeNode类
+     */
+    void solve(TreeNode* t1, TreeNode* t2, TreeNode *&root)
+    {
+        if(t1 == nullptr && t2 == nullptr) return;
+        if(t1 == nullptr)
+        {
+            root = new TreeNode(t2->val);
+        }
+        else if(t2 == nullptr)
+        {
+            root = new TreeNode(t1->val);
+        }
+        else 
+        {
+            root = new TreeNode(t1->val + t2->val);
+        }
+        solve(t1 == nullptr ? t1 : t1->left, t2 == nullptr ? t2 : t2->left, root->left);
+        solve(t1 == nullptr ? t1 : t1->right, t2 == nullptr ? t2 :t2->right, root->right);
+    }
+    TreeNode* mergeTrees(TreeNode* t1, TreeNode* t2) 
+    {
+        if(t1 == nullptr) return t2;
+        if(t2 == nullptr) return t1;
+
+        TreeNode *root = nullptr;
+        solve(t1, t2, root);
+        return root;
+    }
+};
