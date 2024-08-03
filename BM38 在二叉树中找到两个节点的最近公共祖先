@@ -1,0 +1,61 @@
+/**
+ * struct TreeNode {
+ *	int val;
+ *	struct TreeNode *left;
+ *	struct TreeNode *right;
+ *	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ * };
+ */
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param root TreeNode类 
+     * @param o1 int整型 
+     * @param o2 int整型 
+     * @return int整型
+     */
+    bool solve(TreeNode* root, int num, vector<int> &path)
+    {
+        if(root == nullptr) return false;
+        path.push_back(root->val);
+
+        if(root->val == num) return true;
+
+        if(solve(root->left, num, path))
+            return true;
+        if(solve(root->right, num, path))
+            return true;
+        path.pop_back();
+
+        return false;
+    }
+
+    int lowestCommonAncestor(TreeNode* root, int o1, int o2) 
+    {
+        vector<int> res1, res2;
+        solve(root, o1, res1);
+        solve(root, o2, res2);
+        // for(auto &v : res1)
+        // {
+        //     cout << v << " ";
+        // }
+        // cout << endl;
+        // for(auto &v : res2)
+        // {
+        //     cout << v << " ";
+        // }
+
+        int ret = 0;
+        for(int i = 0; i < min(res1.size(), res2.size()); i++)
+        {
+            if(res1[i] == res2[i]) 
+                ret = res1[i];
+            else
+                break;
+        }
+        return ret;
+    }
+};
