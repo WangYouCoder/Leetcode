@@ -1,0 +1,81 @@
+/**
+ * struct TreeNode {
+ *	int val;
+ *	struct TreeNode *left;
+ *	struct TreeNode *right;
+ *	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ * };
+ */
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param root TreeNode类 
+     * @param p int整型 
+     * @param q int整型 
+     * @return int整型
+     */
+    int lowestCommonAncestor(TreeNode* root, int p, int q)
+    {
+        TreeNode *cur = root;
+        vector<TreeNode*> path1;
+        vector<TreeNode*> path2;
+        while(cur != nullptr)
+        {
+            path1.push_back(cur);
+            if(cur->val < p)
+            {
+                cur = cur->right;
+            }
+            else if(cur->val > p)
+            {
+                cur = cur->left;
+            }
+            else 
+            {
+                break;
+            }
+        }
+        cur = root;
+        while(cur != nullptr)
+        {
+            path2.push_back(cur);
+            if(cur->val < q)
+            {
+                cur = cur->right;
+            }
+            else if(cur->val > q)
+            {
+                cur = cur->left;
+            }
+            else 
+            {
+                break;
+            }
+        }
+        // for(auto &t : path1)
+        // {
+        //     cout << t->val << " ";
+        // }
+        // cout << endl;
+        // for(auto &t : path2)
+        // {
+        //     cout << t->val << " ";
+        // }
+        int ret = 0;
+        for(int i = 0; i < min(path1.size(), path2.size()); i++)
+        {
+            if(path1[i]->val == path2[i]->val)
+            {
+                ret = path1[i]->val;
+            }
+            else 
+            {
+                break;
+            }
+        }
+        return ret;
+    }
+};
