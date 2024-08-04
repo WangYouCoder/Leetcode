@@ -1,0 +1,64 @@
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 求二叉树的右视图
+     * @param preOrder int整型vector 先序遍历
+     * @param inOrder int整型vector 中序遍历
+     * @return int整型vector
+     */
+    
+    TreeNode* buildTree(vector<int>& pre, vector<int>& in, int &rooti, int begin, int end)
+    {
+        if(begin > end)
+            return nullptr;
+        
+        auto root = new TreeNode(pre[rooti]);
+        int i = begin;
+        while(pre[rooti] != in[i])
+        {
+            i++;
+        }
+
+        rooti++;
+
+        root->left = buildTree(pre, in, rooti, begin, i - 1);
+        root->right = buildTree(pre, in, rooti, i + 1, end);
+        return root;
+    }
+
+    void level(TreeNode *root, vector<int> &res)
+    {
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty())
+        {
+            size_t size = q.size();
+            while(size--)
+            {
+                TreeNode* front = q.front();
+                q.pop();
+                if(size == 0)
+                {
+                    res.push_back(front->val);
+                }
+
+                if(front->left)
+                    q.push(front->left);
+                if(front->right)
+                    q.push(front->right);
+            }
+        }
+    }
+
+    vector<int> solve(vector<int>& preOrder, vector<int>& inOrder) 
+    {
+        int rooti = 0;
+        TreeNode *root = buildTree(preOrder, inOrder, rooti, 0, preOrder.size() - 1);
+
+        vector<int> res;
+        level(root, res);
+        return res;
+    }
+};
