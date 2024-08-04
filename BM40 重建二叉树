@@ -1,0 +1,40 @@
+/**
+ * struct TreeNode {
+ *	int val;
+ *	struct TreeNode *left;
+ *	struct TreeNode *right;
+ *	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ * };
+ */
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param preOrder int整型vector 
+     * @param vinOrder int整型vector 
+     * @return TreeNode类
+     */
+    TreeNode* reConstructBinaryTree(vector<int>& preOrder, vector<int>& inOrder) 
+    {
+        if(preOrder.size() == 0 || inOrder.size() == 0) return nullptr;
+        auto root = new TreeNode(preOrder[0]);
+
+        for(size_t i = 0; i < inOrder.size(); i++)
+        {
+            if(preOrder[0] == inOrder[i])
+            {
+                vector<int> leftpre(preOrder.begin() + 1, preOrder.begin() + i + 1);
+                vector<int> leftin(inOrder.begin(), inOrder.begin() + i);
+                root->left = reConstructBinaryTree(leftpre, leftin);
+
+                vector<int> rightpre(preOrder.begin() + i + 1, preOrder.end());
+                vector<int> rightin(inOrder.begin() + i + 1, inOrder.end());
+                root->right = reConstructBinaryTree(rightpre, rightin);
+                break;
+            }
+        }
+        return root;
+    }
+};
