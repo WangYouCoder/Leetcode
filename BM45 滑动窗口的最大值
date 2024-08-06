@@ -1,0 +1,36 @@
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param num int整型vector 
+     * @param size int整型 
+     * @return int整型vector
+     */
+    vector<int> maxInWindows(vector<int>& num, int size) 
+    {
+        if(size > num.size() || size == 0) return{};
+        deque<int> q;
+        for(int i = 0; i < size; i++)
+        {
+            while(!q.empty() && num[i] > num[q.back()])
+                q.pop_back();
+            q.push_back(i);
+        }
+        vector<int> res;
+        res.push_back(num[q.front()]);
+
+        for(int i = size; i < num.size(); i++)
+        {
+            if(!q.empty() && q.front() < (i - size + 1)/*本次窗口的首元素下标*/)
+                q.pop_front();
+            
+            while(!q.empty() && num[i] > num[q.back()])
+                q.pop_back();
+            q.push_back(i);
+            res.push_back(num[q.front()]);
+        }
+        return res;
+    }
+};
