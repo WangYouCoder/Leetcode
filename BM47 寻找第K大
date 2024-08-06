@@ -1,0 +1,39 @@
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 
+     * @param a int整型vector 
+     * @param n int整型 
+     * @param K int整型 
+     * @return int整型
+     */
+    int partion(vector<int>& nums, int left, int right, int K)
+    {
+        int begin = left, end = right;
+        int key = left;
+
+        while(left < right)
+        {
+            while(right > left && nums[right] >= nums[key]) right--;
+            while(left < right && nums[left] <= nums[key]) left++;
+            swap(nums[left], nums[right]);
+        }
+        swap(nums[key], nums[left]);
+        cout << left << " ";
+        if(left == nums.size() - K)
+            return nums[left];
+        else if(left > nums.size() - K)
+            return partion(nums, begin, left - 1, K);
+        else
+            return partion(nums, left + 1, end, K);
+
+        return -1;
+    }
+
+    int findKth(vector<int>& a, int n, int K) 
+    {
+        return partion(a, 0, n - 1, K);
+    }
+};
