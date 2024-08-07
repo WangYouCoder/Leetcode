@@ -1,0 +1,22 @@
+class Solution {
+public:
+    void Insert(int num) 
+    {
+        res.push_back(num);
+    }
+
+    double GetMedian() 
+    { 
+        sort(res.begin(), res.end());
+        int sz = res.size();
+        if(res.size() % 2 == 1)
+        {
+            return static_cast<double>(res[sz / 2]);
+        }
+        else {
+            return static_cast<double>((res[sz / 2] + res[sz / 2 - 1])) / 2;
+        }
+    }
+
+    vector<int> res;
+};
