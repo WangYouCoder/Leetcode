@@ -1,0 +1,37 @@
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 解码
+     * @param nums string字符串 数字串
+     * @return int整型
+     */
+    int solve(string nums) 
+    {
+        if(nums == "0") return 0;
+        if(nums.size() == 1) return 1;
+        for(int i = 0; i < nums.size(); i++)
+        {
+            if(nums[i] == '0')
+            {
+                if(nums[i - 1] != '1' && nums[i - 1] != '2')
+                    return 0;
+            }
+        }
+
+        vector<int> dp(nums.size() + 1);
+        dp[0] = 1;
+        for(int i = 1; i <= nums.size(); i++)
+        {
+            int val = 0;
+            if(i > 1)
+            {
+                int tmp = (nums[i - 2] - '0') * 10 + nums[i - 1] - '0';
+                if((tmp >= 11 && tmp <= 19) || (tmp >= 21 && tmp <= 26)) val = 1;
+            }
+            dp[i] = val == 1 ? dp[i-1] + dp[i - 2] : dp[i - 1];
+        }
+        return dp[nums.size()];
+    }
+};
