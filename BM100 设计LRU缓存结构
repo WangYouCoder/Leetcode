@@ -1,0 +1,52 @@
+class Solution {
+public:
+    Solution(int capacity)
+    {
+        // write code here
+        _capacity = capacity;
+    }
+
+    int get(int key) 
+    {
+        // write code here
+        for(int i = 0; i < last.size(); i++)
+        {
+            if(last[i] == key) 
+            {
+                int cur = i + 1;
+                while(cur < last.size())
+                {
+                    last[cur - 1] = last[cur];
+                    cur++;
+                }
+                last[last.size() - 1] = key;
+            }
+        }
+
+        auto it = res.find(key);
+        return it == res.end() ? -1 : res[key];
+    }
+
+    void set(int key, int value)
+    {
+        // write code here
+        if(res.size() == _capacity)
+        {
+            int k = last.front(); last.erase(last.begin());
+            res.erase(k);
+        }
+        res[key] = value;
+        last.push_back(key);
+    }
+
+    vector<int> last;
+    unordered_map<int, int> res;
+    int _capacity;
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* solution = new Solution(capacity);
+ * int output = solution->get(key);
+ * solution->set(key,value);
+ */
