@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) 
+    {
+        vector<int> res;
+        int hash1[26], hash2[26];
+        for(auto c : p)
+        {
+            hash1[c - 'a']++;
+        }
+
+        for(int left = 0, right = 0, count = 0; right < s.size(); right++)
+        {
+            hash2[s[right] - 'a']++;
+            if(hash2[s[right] - 'a'] <= hash1[s[right] - 'a'])
+                count++;  // 统计合法字符数量
+
+            if(right - left + 1 > p.size())
+            {
+                // 如果出窗口的字符是合法字符，那么还需要将统计合法字符数量的count进行--
+                if(hash2[s[left] - 'a'] <= hash1[s[left] - 'a'])
+                    count--;
+
+                // 出窗口
+                hash2[s[left++] - 'a']--;
+            }
+
+            if(count == p.size()) res.push_back(left);
+        }
+        return res;
+    }
+};
