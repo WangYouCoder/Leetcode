@@ -1,0 +1,72 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* Reverse(ListNode* head)
+    {
+        if(head == nullptr) return nullptr;
+        ListNode *prev = nullptr, *cur = head, *next = head->next;
+        while(cur)
+        {
+            cur->next = prev;
+
+            prev = cur;
+            cur = next;
+            if(next)
+                next = next->next;
+        }
+        return prev;
+    }
+
+    ListNode* reverseKGroup(ListNode* head, int k) 
+    {
+        if(k == 1) return head;
+        if(head == nullptr) return nullptr;
+        ListNode *left = head, *right = head, *next = nullptr, *ret = nullptr, *newhead = head, *prev = nullptr;;
+        while(right)
+        {
+            int n = k;
+
+            // 1. 划分反转区间
+            while(--n)
+            {
+                right = right->next;
+                if(right == nullptr) 
+                {
+                    prev->next = left; // 如果最后一个区间元素不足k个，那么不进行翻转，与连接节点直接进行连接，然后返回
+                    return newhead;
+                }
+            }
+            next = right -> next;  // 保存下一个区间的首元素
+            right->next = nullptr; // 将当前区间与后面元素隔离，用于翻转区间 
+
+            // 2. 翻转区间，返回值是翻转后的最后一个元素，也是翻转前的第一个元素
+            ret = Reverse(left);
+
+            // 3. 连接区间，如果prev为空，说明此次翻转的区间为第一区间，前面没有元素，不进行连接
+            //    此处采用的连接方式是: 将当前翻转区间与前面已经翻转完成的元素进行连接
+            if(prev)
+            {
+                prev->next = ret;
+            }
+
+            // 用来保存返回的头节点，也就是第一次翻转区间的最右边的元素
+            if(left == head) newhead = right;
+
+            // 4. 更新用于 连接 的节点
+            prev = left;
+
+            // 5. 更新左右指针，进入到下一个区间
+            left = right = next;
+        }
+        return newhead;
+    }
+};
